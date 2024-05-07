@@ -1,0 +1,17 @@
+{
+  "name": "helloworld-cf",
+  "version": "1.0.0",
+  "description": "",
+  "main": "start.js",
+  "scripts": {
+    "start": "node start.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@sap/xsenv": "^5.1.0",
+    "@sap/xssec": "^3.6.1",
+    "express": "^4.19.2",
+    "passport": "^0.7.0"
+  }
+}
