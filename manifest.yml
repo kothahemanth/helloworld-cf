@@ -4,7 +4,8 @@ applications:
   routes:
   - route: myapp.cfapps.us10-001.hana.ondemand.com
   path: myapp
-  memory: 128M
+  instances: 2
+  memory: 1G
   buildpacks: 
   - nodejs_buildpack
   services:
@@ -12,7 +13,8 @@ applications:
 - name: web
   random-route: true
   path: web
-  memory: 128M
+  instances: 2
+  memory: 512M
   env:
     destinations: >
       [
