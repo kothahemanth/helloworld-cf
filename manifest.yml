@@ -5,7 +5,8 @@ applications:
   - route: myapp.cfapps.us10-001.hana.ondemand.com
   path: myapp
   instances: 2
-  memory: 1G
+  memory: 128M
+  timeout: 80
   buildpacks: 
   - nodejs_buildpack
   services:
@@ -15,6 +16,7 @@ applications:
   path: web
   instances: 2
   memory: 512M
+  timeout: 40
   env:
     destinations: >
       [
