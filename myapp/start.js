@@ -12,33 +12,50 @@ const client = new Client({
   }
 });
 
-await connectToDatabase();
+async function connectToDatabase() {
+  try {
+    await client.connect();
+    console.log('Connected to database');
+  } catch (err) {
+    console.error('Error connecting to database', err);
+  }
+}
 
 app.get('/', function (req, res) {
   res.send('Hello World!');
 });
 
 app.get('/createtable', async function (req, res) {
-  await client.connect();
   try {
-    const query = 'CREATE TABLE Persons (PersonID int, LastName varchar(255), FirstName varchar(255), City varchar(30))';
+    const query = 'CREATE TABLE IF NOT EXISTS Persons (PersonID SERIAL PRIMARY KEY, LastName varchar(255), FirstName varchar(255), City varchar(30))';
     await client.query(query);
+    res.send('Table Created');
   } catch (e) {
-    res.send('Table Already Created');
+    console.error('Error creating table', e);
+    res.status(500).send('Error creating table');
   }
 });
 
 app.get('/insertdata', async function (req, res) {
+  try {
     const text = 'INSERT INTO Persons(LastName, FirstName, City) VALUES($1, $2, $3)';
     const values = ['Kotha', 'Hemanth', 'Hyderabad'];
     await client.query(text, values);
     res.send("Data Inserted");
-
+  } catch (e) {
+    console.error('Error inserting data', e);
+    res.status(500).send('Error inserting data');
+  }
 });
 
 app.get('/readdata', async function (req, res){
-  result = await client.query('SELECT * from Persons');
-  res.send(result);
+  try {
+    const result = await client.query('SELECT * from Persons');
+    res.json(result.rows);
+  } catch (e) {
+    console.error('Error reading data', e);
+    res.status(500).send('Error reading data');
+  }
 });
 
 const port = process.env.PORT || 3000;
