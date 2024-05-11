@@ -4,27 +4,9 @@ applications:
   routes:
   - route: myapp.cfapps.us10-001.hana.ondemand.com
   path: myapp
-  instances: 2
+  instances: 1
   memory: 128M
-  timeout: 80
   buildpacks: 
   - nodejs_buildpack
   services:
-  - nodeuaa
-- name: web
-  random-route: true
-  path: web
-  instances: 2
-  memory: 512M
-  timeout: 40
-  env:
-    destinations: >
-      [
-        {
-          "name":"myapp",
-          "url":"https://myapp.cfapps.us10-001.hana.ondemand.com",
-          "forwardAuthToken": true
-        }
-      ]
-  services:
-  - nodeuaa
+   - postgres
